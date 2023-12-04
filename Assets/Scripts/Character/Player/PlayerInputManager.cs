@@ -9,12 +9,18 @@ namespace AG
 
         private PlayerControls playerControls = null;
 
+        [Header("MOVEMENT INPUT")]
         [SerializeField]
         private Vector2 movementInput = Vector2.zero;
-
-        public float HorizontalInput = 0.0f;
+        public float horizontalInput = 0.0f;
         public float verticalInput = 0.0f;
         public float moveAmount = 0.0f;
+
+        [Header("CAMERA INPUT")]
+        [SerializeField]
+        private Vector2 cameraInput = Vector2.zero;
+        public float cameraHorizontalInput = 0.0f;
+        public float cameraVerticalInput = 0.0f;
 
         private void Awake()
         {
@@ -56,6 +62,7 @@ namespace AG
                 playerControls = new PlayerControls();
 
                 playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+                playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
             }
 
             playerControls.Enable();
@@ -83,15 +90,16 @@ namespace AG
 
         private void Update()
         {
-            HandleMovementInput();
+            HandlePlayerMovementInput();
+            HandleCameraMovementInput();
         }
 
-        private void HandleMovementInput()
+        private void HandlePlayerMovementInput()
         {
             verticalInput = movementInput.y;
-            HorizontalInput = movementInput.x;
+            horizontalInput = movementInput.x;
 
-            moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(HorizontalInput));
+            moveAmount = Mathf.Clamp01(Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
 
             if(moveAmount <= 0.5f && moveAmount > 0)
             {
@@ -101,6 +109,12 @@ namespace AG
             {
                 moveAmount = 1;
             }
+        }
+
+        private void HandleCameraMovementInput()
+        {
+            cameraVerticalInput = cameraInput.y;
+            cameraHorizontalInput = cameraInput.x;
         }
     }
 }

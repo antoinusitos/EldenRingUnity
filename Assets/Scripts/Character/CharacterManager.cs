@@ -40,5 +40,10 @@ namespace AG
                     characterNetworkManager.networkRotationSmoothTime);
             }
         }
+
+        protected virtual void LateUpdate()
+        {
+
+        }
     }
 }

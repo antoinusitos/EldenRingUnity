@@ -37,7 +37,7 @@ namespace AG
         private void GetVerticalAndHorizontalInputs()
         {
             verticalMovement = PlayerInputManager.instance.verticalInput;
-            horizontalMovement = PlayerInputManager.instance.HorizontalInput;
+            horizontalMovement = PlayerInputManager.instance.horizontalInput;
         }
 
         private void HandleGroundedMovement()
