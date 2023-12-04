@@ -7,6 +7,8 @@ namespace AG
     {
         public static PlayerInputManager instance = null;
 
+        public PlayerManager player = null;
+
         private PlayerControls playerControls = null;
 
         [Header("MOVEMENT INPUT")]
@@ -109,6 +111,13 @@ namespace AG
             {
                 moveAmount = 1;
             }
+
+            if(player == null)
+            {
+                return;
+            }
+
+            player.playerAnimatorManager.UpdateAnimatorValuesParamaters(0, moveAmount);
         }
 
         private void HandleCameraMovementInput()

@@ -6,13 +6,17 @@ namespace AG
 {
     public class PlayerManager : CharacterManager
     {
-        private PlayerLocomotionManager playerLocomotionManager = null;
+        [HideInInspector]
+        public PlayerAnimatorManager playerAnimatorManager = null;
+        [HideInInspector]
+        public PlayerLocomotionManager playerLocomotionManager = null;
 
         protected override void Awake()
         {
             base.Awake();
 
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
+            playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
         }
 
         protected override void Update()
@@ -46,6 +50,7 @@ namespace AG
             if(IsOwner)
             {
                 PlayerCamera.instance.player = this;
+                PlayerInputManager.instance.player = this;
             }
         }
 

@@ -7,15 +7,19 @@ namespace AG
 {
     public class CharacterManager : NetworkBehaviour
     {
+        [HideInInspector]
         public CharacterController characterController = null;
-
-        private CharacterNetworkManager characterNetworkManager = null;
+        [HideInInspector]
+        public Animator animator = null;
+        [HideInInspector]
+        public CharacterNetworkManager characterNetworkManager = null;
 
         protected virtual void Awake()
         {
             DontDestroyOnLoad(gameObject);
 
             characterController = GetComponent<CharacterController>();
+            animator = GetComponent<Animator>();
             characterNetworkManager = GetComponent<CharacterNetworkManager>();
         }
 

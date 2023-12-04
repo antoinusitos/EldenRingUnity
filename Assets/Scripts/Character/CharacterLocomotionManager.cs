@@ -10,5 +10,10 @@ namespace AG
         {
             DontDestroyOnLoad(gameObject);
         }
+
+        protected virtual void Update()
+        {
+
+        }
     }
 }
