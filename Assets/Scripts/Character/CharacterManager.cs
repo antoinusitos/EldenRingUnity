@@ -13,6 +13,14 @@ namespace AG
         public Animator animator = null;
         [HideInInspector]
         public CharacterNetworkManager characterNetworkManager = null;
+        [HideInInspector]
+        public CharacterAnimatorManager characterAnimatorManager = null;
+
+        [Header("Flags")]
+        public bool isPerformingAction = false;
+        public bool canRotate = true;
+        public bool canMove = true;
+        public bool applyRootMotion = false;
 
         protected virtual void Awake()
         {
@@ -21,6 +29,7 @@ namespace AG
             characterController = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
             characterNetworkManager = GetComponent<CharacterNetworkManager>();
+            characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
         }
 
         protected virtual void Update()

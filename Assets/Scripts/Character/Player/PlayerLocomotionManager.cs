@@ -8,10 +8,14 @@ namespace AG
     {
         private PlayerManager player = null;
 
+        [HideInInspector]
         public float verticalMovement = 0.0f;
+        [HideInInspector]
         public float horizontalMovement = 0.0f;
+        [HideInInspector]
         public float moveAmount = 0.0f;
 
+        [Header("Movement Settings")]
         private Vector3 moveDirection = Vector3.zero;
         private Vector3 targetRotationDirection = Vector3.zero;
         [SerializeField]
@@ -20,6 +24,9 @@ namespace AG
         private float runningSpeed = 5.0f;
         [SerializeField]
         private float rotationSpeed = 15.0f;
+
+        [Header("Dodge")]
+        private Vector3 rollDirection = Vector3.zero;
 
         protected override void Awake()
         {
@@ -63,6 +70,11 @@ namespace AG
 
         private void HandleGroundedMovement()
         {
+            if (!player.canMove)
+            {
+                return;
+            }
+
             GetMovementValues();
 
             moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
@@ -82,6 +94,11 @@ namespace AG
 
         private void HandleRotation()
         {
+            if(!player.canRotate)
+            {
+                return;
+            }
+
             targetRotationDirection = Vector3.zero;
             targetRotationDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
             targetRotationDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
@@ -96,6 +113,31 @@ namespace AG
             Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
             transform.rotation = targetRotation;
+        }
+
+        public void AttemptToPerformDodge()
+        {
+            if(player.isPerformingAction)
+            {
+                return;
+            }
+
+            if(PlayerInputManager.instance.moveAmount > 0)
+            {
+                rollDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+                rollDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+                rollDirection.y = 0;
+                rollDirection.Normalize();
+
+                Quaternion playerRotation = Quaternion.LookRotation(rollDirection);
+                player.transform.rotation = playerRotation;
+
+                player.playerAnimatorManager.PlayTargetActionAnimation("Roll_Forward_01", true, true);
+            }
+            else
+            {
+                player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
+            }
         }
     }
 }
