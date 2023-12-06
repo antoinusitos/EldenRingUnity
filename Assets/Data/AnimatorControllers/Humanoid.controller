@@ -295,7 +295,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 2258565015760146999, guid: 631477e670c930047872fed33f0b4a6e, type: 3}
-    m_Threshold: 0.125
+    m_Threshold: 0.109375
     m_Position: {x: 0, y: 0.5}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -303,7 +303,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -8690379190075368226, guid: 631477e670c930047872fed33f0b4a6e, type: 3}
-    m_Threshold: 0.25
+    m_Threshold: 0.21875
     m_Position: {x: 0, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -311,7 +311,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -8580385091004391165, guid: 631477e670c930047872fed33f0b4a6e, type: 3}
-    m_Threshold: 0.375
+    m_Threshold: 0.328125
     m_Position: {x: -1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -319,7 +319,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 5379518931189783760, guid: 631477e670c930047872fed33f0b4a6e, type: 3}
-    m_Threshold: 0.5
+    m_Threshold: 0.4375
     m_Position: {x: 1, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -327,7 +327,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -44622299199815522, guid: 631477e670c930047872fed33f0b4a6e, type: 3}
-    m_Threshold: 0.625
+    m_Threshold: 0.546875
     m_Position: {x: -0.5, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -335,7 +335,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -3947429180006830498, guid: 631477e670c930047872fed33f0b4a6e, type: 3}
-    m_Threshold: 0.75
+    m_Threshold: 0.65625
     m_Position: {x: 0.5, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -343,9 +343,17 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: 2258565015760146999, guid: 631477e670c930047872fed33f0b4a6e, type: 3}
-    m_Threshold: 0.875
+    m_Threshold: 0.765625
     m_Position: {x: 0, y: -0.5}
     m_TimeScale: -1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Horizontal
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 459197644164299641, guid: d7f98745fbc488145bb2ad1cf216ad23, type: 3}
+    m_Threshold: 0.875
+    m_Position: {x: 0, y: 2}
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: Horizontal
     m_Mirror: 0

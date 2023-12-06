@@ -27,6 +27,7 @@ namespace AG
         [Header("PLAYER ACTION INPUT")]
         [SerializeField]
         private bool dodgeInput = false;
+        private bool sprintInput = false;
 
         private void Awake()
         {
@@ -70,6 +71,8 @@ namespace AG
                 playerControls.PlayerMovement.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
                 playerControls.PlayerCamera.Movement.performed += i => cameraInput = i.ReadValue<Vector2>();
                 playerControls.PlayerActions.Dodge.performed += i => dodgeInput = true;
+                playerControls.PlayerActions.Sprint.performed += i => sprintInput = true;
+                playerControls.PlayerActions.Sprint.canceled += i => sprintInput = false;
             }
 
             playerControls.Enable();
@@ -105,6 +108,7 @@ namespace AG
             HandlePlayerMovementInput();
             HandleCameraMovementInput();
             HandleDodgeInput();
+            HandleSprinting();
         }
 
         private void HandlePlayerMovementInput()
@@ -128,7 +132,7 @@ namespace AG
                 return;
             }
 
-            player.playerAnimatorManager.UpdateAnimatorValuesParamaters(0, moveAmount);
+            player.playerAnimatorManager.UpdateAnimatorValuesParamaters(0, moveAmount, player.playerNetworkManager.isSprinting.Value);
         }
 
         private void HandleCameraMovementInput()
@@ -146,6 +150,18 @@ namespace AG
                 player.playerLocomotionManager.AttemptToPerformDodge();
             }
 
+        }
+
+        private void HandleSprinting()
+        {
+            if(sprintInput)
+            {
+                player.playerLocomotionManager.HandleSprinting();
+            }
+            else
+            {
+                player.playerNetworkManager.isSprinting.Value = false;
+            }
         }
     }
 }

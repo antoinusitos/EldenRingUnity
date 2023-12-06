@@ -10,6 +10,8 @@ namespace AG
         public PlayerAnimatorManager playerAnimatorManager = null;
         [HideInInspector]
         public PlayerLocomotionManager playerLocomotionManager = null;
+        [HideInInspector]
+        public PlayerNetworkManager playerNetworkManager = null;
 
         protected override void Awake()
         {
@@ -17,6 +19,7 @@ namespace AG
 
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
             playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
+            playerNetworkManager = GetComponent<PlayerNetworkManager>();
         }
 
         protected override void Update()

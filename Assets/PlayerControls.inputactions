@@ -221,7 +221,16 @@
                     "id": "80461da8-e67c-4e4a-94e2-63a1cd8b1389",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Sprint",
+                    "type": "PassThrough",
+                    "id": "0ea62dcf-74b4-44b3-bf24-7db91ce61ab5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
                     "initialStateCheck": false
                 }
             ],
@@ -245,6 +254,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a3d9d584-a00c-45d4-9f2b-257c7164005d",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "31cb1ab7-fe1f-4c5d-9376-5b127f25653f",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

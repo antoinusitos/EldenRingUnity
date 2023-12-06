@@ -9,20 +9,31 @@ namespace AG
     {
         private CharacterManager character = null;
 
-        private float vertical = 0f;
-        private float horizontal = 0f;
+        private int vertical = 0;
+        private int horizontal = 0;
 
         public readonly float crossFadeTime = 0.2f;
 
         protected virtual void Awake()
         {
             character = GetComponent<CharacterManager>();
+
+            vertical = Animator.StringToHash("Vertical");
+            horizontal = Animator.StringToHash("Horizontal");
         }
 
-        public void UpdateAnimatorValuesParamaters(float horizontalValue, float verticalValues)
+        public void UpdateAnimatorValuesParamaters(float horizontalValue, float verticalValues, bool isSprinting)
         {
-            character.animator.SetFloat("Horizontal", horizontalValue, 0.1f, Time.deltaTime);
-            character.animator.SetFloat("Vertical", verticalValues, 0.1f, Time.deltaTime);
+            float horizontalAmount = horizontalValue;
+            float verticalAmount = verticalValues;
+
+            if(isSprinting)
+            {
+                verticalAmount = 2;
+            }
+
+            character.animator.SetFloat(horizontal, horizontalAmount, 0.1f, Time.deltaTime);
+            character.animator.SetFloat(vertical, verticalAmount, 0.1f, Time.deltaTime);
         }
 
         public virtual void PlayTargetActionAnimation(

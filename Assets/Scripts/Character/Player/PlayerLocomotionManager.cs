@@ -23,6 +23,8 @@ namespace AG
         [SerializeField]
         private float runningSpeed = 5.0f;
         [SerializeField]
+        private float spritingSpeed = 6.5f;
+        [SerializeField]
         private float rotationSpeed = 15.0f;
 
         [Header("Dodge")]
@@ -51,7 +53,7 @@ namespace AG
                 horizontalMovement = player.characterNetworkManager.horizontalMovement.Value;
                 moveAmount = player.characterNetworkManager.moveAmount.Value;
 
-                player.playerAnimatorManager.UpdateAnimatorValuesParamaters(0, moveAmount);
+                player.playerAnimatorManager.UpdateAnimatorValuesParamaters(0, moveAmount, player.playerNetworkManager.isSprinting.Value);
             }
         }
 
@@ -82,13 +84,20 @@ namespace AG
             moveDirection.Normalize();
             moveDirection.y = 0;
 
-            if(PlayerInputManager.instance.moveAmount > 0.5f)
+            if(player.playerNetworkManager.isSprinting.Value)
             {
-                player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+                player.characterController.Move(moveDirection * spritingSpeed * Time.deltaTime);
             }
-            else if (PlayerInputManager.instance.moveAmount <= 0.5f)
+            else
             {
-                player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+                if (PlayerInputManager.instance.moveAmount > 0.5f)
+                {
+                    player.characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
+                }
+                else if (PlayerInputManager.instance.moveAmount <= 0.5f)
+                {
+                    player.characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+                }
             }
         }
 
@@ -113,6 +122,23 @@ namespace AG
             Quaternion newRotation = Quaternion.LookRotation(targetRotationDirection);
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, newRotation, rotationSpeed * Time.deltaTime);
             transform.rotation = targetRotation;
+        }
+
+        public void HandleSprinting()
+        {
+            if(player.isPerformingAction)
+            {
+                player.playerNetworkManager.isSprinting.Value = false;
+            }
+
+            if(moveAmount >= 0.5f)
+            {
+                player.playerNetworkManager.isSprinting.Value = true;
+            }
+            else
+            {
+                player.playerNetworkManager.isSprinting.Value = false;
+            }
         }
 
         public void AttemptToPerformDodge()
