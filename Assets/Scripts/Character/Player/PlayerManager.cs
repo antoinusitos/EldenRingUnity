@@ -12,6 +12,8 @@ namespace AG
         public PlayerLocomotionManager playerLocomotionManager = null;
         [HideInInspector]
         public PlayerNetworkManager playerNetworkManager = null;
+        [HideInInspector]
+        public PlayerStatsManager playerStatsManager = null;
 
         protected override void Awake()
         {
@@ -20,6 +22,7 @@ namespace AG
             playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
             playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
             playerNetworkManager = GetComponent<PlayerNetworkManager>();
+            playerStatsManager = GetComponent<PlayerStatsManager>();
         }
 
         protected override void Update()
@@ -32,6 +35,8 @@ namespace AG
             }
 
             playerLocomotionManager.HandleAllMovement();
+
+            playerStatsManager.RegenerateStamina();
         }
 
         protected override void LateUpdate()
@@ -54,6 +59,13 @@ namespace AG
             {
                 PlayerCamera.instance.player = this;
                 PlayerInputManager.instance.player = this;
+
+                playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHUDManager.SetNewStaminaValue;
+                playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
+
+                playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStaminaBasedOnEnduranceLevel(playerNetworkManager.endurance.Value);
+                playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
+                PlayerUIManager.instance.playerUIHUDManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
             }
         }
 

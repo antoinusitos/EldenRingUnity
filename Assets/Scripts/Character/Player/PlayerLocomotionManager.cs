@@ -26,9 +26,13 @@ namespace AG
         private float spritingSpeed = 6.5f;
         [SerializeField]
         private float rotationSpeed = 15.0f;
+        [SerializeField]
+        private int sprintingStaminaCost = 2;
 
         [Header("Dodge")]
         private Vector3 rollDirection = Vector3.zero;
+        [SerializeField]
+        private float dodgeStaminaCost = 25;
 
         protected override void Awake()
         {
@@ -131,6 +135,12 @@ namespace AG
                 player.playerNetworkManager.isSprinting.Value = false;
             }
 
+            if(player.playerNetworkManager.currentStamina.Value <= 0)
+            {
+                player.playerNetworkManager.isSprinting.Value = false;
+                return;
+            }
+
             if(moveAmount >= 0.5f)
             {
                 player.playerNetworkManager.isSprinting.Value = true;
@@ -139,11 +149,21 @@ namespace AG
             {
                 player.playerNetworkManager.isSprinting.Value = false;
             }
+
+            if(player.playerNetworkManager.isSprinting.Value)
+            {
+                player.playerNetworkManager.currentStamina.Value -= sprintingStaminaCost * Time.deltaTime;
+            }
         }
 
         public void AttemptToPerformDodge()
         {
             if(player.isPerformingAction)
+            {
+                return;
+            }
+
+            if(player.playerNetworkManager.currentStamina.Value <= 0)
             {
                 return;
             }
@@ -164,6 +184,8 @@ namespace AG
             {
                 player.playerAnimatorManager.PlayTargetActionAnimation("Back_Step_01", true, true);
             }
+
+            player.playerNetworkManager.currentStamina.Value -= dodgeStaminaCost;
         }
     }
 }

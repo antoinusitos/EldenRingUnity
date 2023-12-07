@@ -14,6 +14,9 @@ namespace AG
         [SerializeField]
         private bool startGameAsClient = false;
 
+        [HideInInspector]
+        public PlayerUIHUDManager playerUIHUDManager = null;
+
         private void Awake()
         {
             if(instance == null)
@@ -24,6 +27,8 @@ namespace AG
             {
                 Destroy(gameObject);
             }
+
+            playerUIHUDManager = GetComponentInChildren<PlayerUIHUDManager>();
         }
 
         private void Start()

@@ -688,6 +688,7 @@ GameObject:
   - component: {fileID: 2466988530071546831}
   - component: {fileID: -4952435655887539372}
   - component: {fileID: 2694097700828908967}
+  - component: {fileID: -8939535779446090410}
   - component: {fileID: 9001118035689036007}
   - component: {fileID: 1309940169189299779}
   - component: {fileID: -336291202855328821}
@@ -754,6 +755,7 @@ MonoBehaviour:
   applyRootMotion: 0
   playerAnimatorManager: {fileID: 0}
   playerLocomotionManager: {fileID: 0}
+  playerNetworkManager: {fileID: 0}
 --- !u!114 &-2750498004255283751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,6 +781,8 @@ MonoBehaviour:
     m_InternalValue: 0
   moveAmount:
     m_InternalValue: 0
+  isSprinting:
+    m_InternalValue: 0
 --- !u!114 &2466988530071546831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,6 +800,7 @@ MonoBehaviour:
   moveAmount: 0
   walkingSpeed: 1.5
   runningSpeed: 4.5
+  spritingSpeed: 6.5
   rotationSpeed: 15
 --- !u!114 &-4952435655887539372
 MonoBehaviour:
@@ -819,6 +824,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41b7b7ad266a3a64e9cb64463369c620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8939535779446090410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2290232846266426329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 195b165de1330d344aab32a8baa0a8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!143 &9001118035689036007
