@@ -6,7 +6,7 @@ using System.IO;
 
 namespace AG
 {
-    public class SaveFileDataWriter : MonoBehaviour
+    public class SaveFileDataWriter
     {
         public string saveDataDirectoryPath = "";
         public string saveFileName = "";
