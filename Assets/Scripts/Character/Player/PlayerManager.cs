@@ -69,5 +69,19 @@ namespace AG
             }
         }
 
+        public void SaveGameDataToCurrentCharacterData(ref CharacterSaveData currentCharacterData)
+        {
+            currentCharacterData.characterName = playerNetworkManager.characterName.Value.ToString();
+            currentCharacterData.yPosition = transform.position.y;
+            currentCharacterData.xPosition = transform.position.x;
+            currentCharacterData.zPosition = transform.position.z;
+        }
+
+        public void LoadGameDataFromCurrentCharacterData(ref CharacterSaveData currentCharacterData)
+        {
+            playerNetworkManager.characterName.Value = currentCharacterData.characterName;
+            Vector3 position = new Vector3(currentCharacterData.xPosition, currentCharacterData.yPosition, currentCharacterData.zPosition);
+            transform.position = position;
+        }
     }
 }
