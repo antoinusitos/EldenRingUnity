@@ -6,6 +6,8 @@ namespace AG
 {
     public class TitleScreenManager : MonoBehaviour
     {
+        public static TitleScreenManager instance = null;
+
         [Header("Menus")]
         [SerializeField]
         private GameObject titleScreenMainMenu = null;
@@ -14,9 +16,29 @@ namespace AG
 
         [Header("Buttons")]
         [SerializeField]
+        private Button mainMenuNewGameButton = null;
+        [SerializeField]
         private Button loadMenuReturnButton = null;
         [SerializeField]
         private Button mainMenuLoadGameButton = null;
+
+        [Header("Pop Ups")]
+        [SerializeField]
+        private GameObject noCharacterSlotsPopUp = null;
+        [SerializeField]
+        private Button noCharacterSlotsOkayButtons = null;
+
+        private void Awake()
+        {
+            if(instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         public void StartNetworkAsHost()
         {
@@ -25,8 +47,7 @@ namespace AG
 
         public void StartNewGame()
         {
-            WorldSaveGameManager.instance.CreateNewGame();
-            StartCoroutine(WorldSaveGameManager.instance.LoadWorldScene());
+            WorldSaveGameManager.instance.AttemptCreateNewGame();
         }
 
         public void OpenLoadGameMenu()
@@ -43,6 +64,18 @@ namespace AG
             titleScreenMainMenu.SetActive(true);
 
             mainMenuLoadGameButton.Select();
+        }
+
+        public void DisplayNoFreeCharacterSlotPopUp()
+        {
+            noCharacterSlotsPopUp.SetActive(true);
+            noCharacterSlotsOkayButtons.Select();
+        }
+
+        public void CloseNoFreeCharacterSlotPopup()
+        {
+            noCharacterSlotsPopUp.SetActive(false);
+            mainMenuNewGameButton.Select();
         }
     }
 }

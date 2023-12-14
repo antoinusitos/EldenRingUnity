@@ -8,7 +8,7 @@ namespace AG
 {
     public class SaveFileDataWriter
     {
-        public string saveDataDirectoryPath = "";
+        public string saveDataDirectoryPath = "Character";
         public string saveFileName = "";
 
         public bool CheckToSeeIfFileExists()

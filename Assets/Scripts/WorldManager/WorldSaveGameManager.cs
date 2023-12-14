@@ -9,8 +9,7 @@ namespace AG
     {
         public static WorldSaveGameManager instance = null;
 
-        [SerializeField]
-        private PlayerManager player = null;
+        public PlayerManager player = null;
 
         [Header("Save/Load")]
         [SerializeField]
@@ -116,11 +115,43 @@ namespace AG
             return fileName;
         }
 
-        public void CreateNewGame()
+        public void AttemptCreateNewGame()
         {
-            saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeinUsed(currentCharacterSlotBeingUsed);
+            saveFileDataWriter = new SaveFileDataWriter
+            {
+                saveDataDirectoryPath = Application.persistentDataPath,
+            };
 
-            currentCharacterData = new CharacterSaveData();
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeinUsed(CharacterSlot.CharacterSlot_01);
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_01;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeinUsed(CharacterSlot.CharacterSlot_02);
+
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_02;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
+            saveFileDataWriter.saveFileName = DecideCharacterFileNameBasedOnCharacterSlotBeinUsed(CharacterSlot.CharacterSlot_03);
+
+            if (!saveFileDataWriter.CheckToSeeIfFileExists())
+            {
+                currentCharacterSlotBeingUsed = CharacterSlot.CharacterSlot_03;
+                currentCharacterData = new CharacterSaveData();
+                StartCoroutine(LoadWorldScene());
+                return;
+            }
+
+            TitleScreenManager.instance.DisplayNoFreeCharacterSlotPopUp();
         }
 
         public void LoadGame()
@@ -195,6 +226,8 @@ namespace AG
         public IEnumerator LoadWorldScene()
         {
             AsyncOperation loadOperation = SceneManager.LoadSceneAsync(worldSceneIndex);
+
+            player.LoadGameDataFromCurrentCharacterData(ref currentCharacterData);
 
             yield return null;
         }
