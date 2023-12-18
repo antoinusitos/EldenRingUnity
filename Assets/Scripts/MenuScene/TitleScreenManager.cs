@@ -21,12 +21,19 @@ namespace AG
         private Button loadMenuReturnButton = null;
         [SerializeField]
         private Button mainMenuLoadGameButton = null;
+        [SerializeField]
+        private Button deleteCharacterPopUpConfirmButton = null;
 
         [Header("Pop Ups")]
         [SerializeField]
         private GameObject noCharacterSlotsPopUp = null;
         [SerializeField]
         private Button noCharacterSlotsOkayButtons = null;
+        [SerializeField]
+        private GameObject deleteCharacterSlotPopUp = null;
+
+        [Header("Save Slots")]
+        public CharacterSlot currentSelectedSlot = CharacterSlot.NO_SLOT;
 
         private void Awake()
         {
@@ -76,6 +83,42 @@ namespace AG
         {
             noCharacterSlotsPopUp.SetActive(false);
             mainMenuNewGameButton.Select();
+        }
+
+        public void SelectCharacterSlot(CharacterSlot slot)
+        {
+            currentSelectedSlot = slot;
+        }
+
+        public void SelectNoSlot()
+        {
+            currentSelectedSlot = CharacterSlot.NO_SLOT;
+        }
+
+        public void AttemptToDeleteCharacterSlot()
+        {
+            if(currentSelectedSlot != CharacterSlot.NO_SLOT)
+            {
+                deleteCharacterSlotPopUp.SetActive(true);
+                deleteCharacterPopUpConfirmButton.Select();
+            }
+        }
+
+        public void DeleteCharacterSlot()
+        {
+            deleteCharacterSlotPopUp.SetActive(false);
+            WorldSaveGameManager.instance.DeleteGame(currentSelectedSlot);
+
+            titleScreenLoadMenu.SetActive(false);
+            titleScreenLoadMenu.SetActive(true);
+
+            loadMenuReturnButton.Select();
+        }
+
+        public void CloseDeleteCharacterPopUp()
+        {
+            deleteCharacterSlotPopUp.SetActive(false);
+            loadMenuReturnButton.Select();
         }
     }
 }

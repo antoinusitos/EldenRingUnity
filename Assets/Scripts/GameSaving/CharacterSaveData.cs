@@ -7,6 +7,9 @@ namespace AG
     [System.Serializable]
     public class CharacterSaveData
     {
+        [Header("Scene Index")]
+        public int sceneIndex = 1;
+
         [Header("Character Name")]
         public string characterName = "";
 
